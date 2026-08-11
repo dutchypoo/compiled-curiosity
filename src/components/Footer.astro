@@ -1,0 +1,10 @@
+---
+import { SITE } from '../consts';
+const year = new Date().getUTCFullYear();
+---
+<footer class="site">
+  <div class="wrap footrow">
+    <span>© {year} {SITE.author} · {SITE.name}</span>
+    <span><a href={SITE.repo}>source ↗</a> · <a href="/rss.xml">rss</a> · no trackers · no cookies</span>
+  </div>
+</footer>

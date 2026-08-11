@@ -1,0 +1,54 @@
+---
+import Base from '../layouts/Base.astro';
+import DisclosureCard from '../components/DisclosureCard.astro';
+import WriteupCard from '../components/WriteupCard.astro';
+import { getCollection } from 'astro:content';
+import { SITE } from '../consts';
+
+const disc = (await getCollection('disclosures', ({ data }) => !data.draft))
+  .sort((a, b) => (b.data.featured ? 1 : 0) - (a.data.featured ? 1 : 0)
+               || +b.data.disclosed - +a.data.disclosed);
+const wr = (await getCollection('writeups', ({ data }) => !data.draft))
+  .sort((a, b) => +b.data.date - +a.data.date);
+---
+<Base>
+  <section class="hero">
+    <span class="eyebrow">// vulnerability research &amp; responsible disclosure</span>
+    <h1>{SITE.tagline}</h1>
+    <p class="lede">I find vulnerabilities in open-source software using coverage-guided
+      fuzzing (<strong>libFuzzer + ASan/UBSan</strong>) and manual source audit, then work with
+      maintainers to get them fixed. Everything here is real and honestly triaged —
+      reported at the severity it earned, nothing inflated.</p>
+  </section>
+
+  <section id="disclosures">
+    <div class="shead">
+      <h2><span class="caret">&#9656;</span>disclosures</h2>
+      <span class="more"><a href="/disclosures">all →</a></span>
+    </div>
+    <div class="grid">{disc.slice(0, 4).map((e) => <DisclosureCard entry={e} />)}</div>
+  </section>
+
+  <section id="writeups">
+    <div class="shead">
+      <h2><span class="caret">&#9656;</span>writeups</h2>
+      {wr.length > 0 && <span class="more"><a href="/writeups">all →</a></span>}
+    </div>
+    {wr.length > 0
+      ? <div class="grid">{wr.slice(0, 4).map((e) => <WriteupCard entry={e} />)}</div>
+      : <div class="empty">No writeups yet. Add one with <code>npm run new writeup "Room name"</code>, then set <code>draft: false</code>.</div>}
+  </section>
+
+  <section id="about" class="about">
+    <div class="shead"><h2><span class="caret">&#9656;</span>about</h2></div>
+    <p>I'm a security researcher focused on <strong>memory-safety bugs in C and C++</strong>.
+      What drives me is the work itself — finding real vulnerabilities, disclosing them
+      responsibly, and giving back to the <strong>open-source community</strong>. I report what I
+      find at the severity it actually has, and I work with maintainers, not around them.</p>
+    <div class="contacts">
+      <a href={SITE.github}>github.com/dutchypoo ↗</a>
+      <a href={`mailto:${SITE.email}`}>{SITE.email}</a>
+      <a href="/.well-known/security.txt">security.txt</a>
+    </div>
+  </section>
+</Base>

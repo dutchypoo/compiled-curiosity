@@ -1,0 +1,22 @@
+---
+import Base from '../../layouts/Base.astro';
+import { getCollection } from 'astro:content';
+import { monthYear } from '../../consts';
+const notes = (await getCollection('notes', ({ data }) => !data.draft))
+  .sort((a, b) => +b.data.date - +a.data.date);
+---
+<Base title="Notes" description="Short research notes by dutchypoo.">
+  <section>
+    <div class="shead"><h2><span class="caret">&#9656;</span>notes</h2>
+      {notes.length > 0 && <span class="more">{notes.length}</span>}</div>
+    {notes.length > 0
+      ? <div class="grid">{notes.map((e) => (
+          <a class="card" href={`/notes/${e.id}`}>
+            <div class="target">note</div>
+            <h3>{e.data.title}</h3>
+            {e.data.summary && <p class="desc">{e.data.summary}</p>}
+            <div class="foot"><span>{monthYear(e.data.date)}</span><span class="go">read →</span></div>
+          </a>))}</div>
+      : <div class="empty">No notes yet. Add one with <code>npm run new note "Title"</code>.</div>}
+  </section>
+</Base>

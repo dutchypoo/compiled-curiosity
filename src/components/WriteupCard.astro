@@ -1,0 +1,15 @@
+---
+import { monthYear } from '../consts';
+const { entry } = Astro.props;
+const d = entry.data;
+const href = `/writeups/${entry.id}`;
+---
+<a class="card" href={href}>
+  <div class="target">{d.platform}{d.difficulty ? ` · ${d.difficulty}` : ''}</div>
+  <h3>{d.title}</h3>
+  {d.summary && <p class="desc">{d.summary}</p>}
+  <div class="meta">
+    {d.tags.slice(0, 4).map((t: string) => <span class="pill tag">{t}</span>)}
+  </div>
+  <div class="foot"><span>{monthYear(d.date)}</span><span class="go">read →</span></div>
+</a>

@@ -1,0 +1,26 @@
+---
+import { monthYear } from '../consts';
+const { entry } = Astro.props;
+const d = entry.data;
+const href = `/disclosures/${entry.id}`;
+const sevClass = /crit|high/i.test(d.severity ?? '') ? 'high' : 'dos';
+const ref = (d.advisory_url as string).replace(/\/+$/, '').split('/').pop() ?? '';
+const refLabel = /^GHSA/i.test(ref) ? ref : (ref ? `#${ref}` : '');
+const kicker = d.status === 'published' ? 'published advisory'
+             : d.status === 'fixed' ? 'fixed by maintainer' : 'featured';
+---
+<a class={`card${d.featured ? ' feat' : ''}`} href={href}>
+  {d.featured && <p class="kicker">// {kicker}</p>}
+  <div class="target">{d.target}</div>
+  <h3>{d.title}</h3>
+  {d.summary && <p class="desc">{d.summary}</p>}
+  <div class="meta">
+    <span class={`pill ${sevClass}`}>{d.severity}{d.cvss ? ` · CVSS ${d.cvss}` : ''}</span>
+    <span class="pill done">{d.status}</span>
+    {d.tags.slice(0, 3).map((t: string) => <span class="pill tag">{t}</span>)}
+  </div>
+  <div class="foot">
+    <span>{[refLabel, monthYear(d.disclosed)].filter(Boolean).join(' · ')}</span>
+    <span class="go">view →</span>
+  </div>
+</a>

@@ -1,0 +1,20 @@
+{
+  "name": "compiled-curiosity",
+  "type": "module",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "clean": "rm -rf dist .astro node_modules/.astro",
+    "rebuild": "npm run clean && astro build",
+    "new": "bash scripts/new-post.sh",
+    "audit": "npm audit --omit=dev --audit-level=high"
+  },
+  "dependencies": {
+    "astro": "^7.2.1",
+    "@astrojs/rss": "^4.0.19",
+    "@astrojs/sitemap": "^3.7.3"
+  }
+}

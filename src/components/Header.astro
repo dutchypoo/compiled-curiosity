@@ -1,0 +1,25 @@
+---
+const path = Astro.url.pathname.replace(/\/+$/, '') || '/';
+const cur = (p: string) =>
+  (p === '/' ? path === '/' : path === p || path.startsWith(p + '/')) ? 'page' : undefined;
+---
+<header class="site">
+  <div class="wrap bar">
+    <a class="brand" href="/" aria-label="Compiled Curiosity — home">
+      <svg class="cc-logo" viewBox="0 0 100 100" aria-hidden="true">
+        <circle cx="50" cy="50" r="45" fill="#0f1116" stroke="#22252b" stroke-width="3"/>
+        <g class="arc-o"><path d="M67 30 A26 26 0 1 0 67 70" fill="none" stroke="#7ee787" stroke-width="8" stroke-linecap="round"/></g>
+        <g class="arc-i"><path d="M61 40 A15 15 0 1 0 61 60" fill="none" stroke="#b3a1ff" stroke-width="7" stroke-linecap="round"/></g>
+      </svg>
+      <span class="name">Compiled Curiosity</span>
+    </a>
+    <nav class="top" aria-label="Primary">
+      <ul>
+        <li><a href="/disclosures" aria-current={cur('/disclosures')}>disclosures</a></li>
+        <li><a href="/writeups" aria-current={cur('/writeups')}>writeups</a></li>
+        <li><a href="/notes" aria-current={cur('/notes')}>notes</a></li>
+        <li><a href="/about" aria-current={cur('/about')}>about</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>

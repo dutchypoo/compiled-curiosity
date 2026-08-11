@@ -1,0 +1,16 @@
+---
+import Base from '../../layouts/Base.astro';
+import WriteupCard from '../../components/WriteupCard.astro';
+import { getCollection } from 'astro:content';
+const wr = (await getCollection('writeups', ({ data }) => !data.draft))
+  .sort((a, b) => +b.data.date - +a.data.date);
+---
+<Base title="Writeups" description="CTF and lab writeups by dutchypoo.">
+  <section>
+    <div class="shead"><h2><span class="caret">&#9656;</span>writeups</h2>
+      {wr.length > 0 && <span class="more">{wr.length}</span>}</div>
+    {wr.length > 0
+      ? <div class="grid">{wr.map((e) => <WriteupCard entry={e} />)}</div>
+      : <div class="empty">No writeups yet. Add one with <code>npm run new writeup "Room name"</code>, fill it in, set <code>draft: false</code>, and commit.</div>}
+  </section>
+</Base>

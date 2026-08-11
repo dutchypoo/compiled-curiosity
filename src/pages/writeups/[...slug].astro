@@ -1,0 +1,27 @@
+---
+import Base from '../../layouts/Base.astro';
+import { getCollection, render } from 'astro:content';
+
+export async function getStaticPaths() {
+  const items = await getCollection('writeups', ({ data }) => !data.draft);
+  return items.map((entry) => ({ params: { slug: entry.id }, props: { entry } }));
+}
+const { entry } = Astro.props;
+const { Content } = await render(entry);
+const d = entry.data;
+const iso = (x: Date) => x.toISOString().slice(0, 10);
+---
+<Base title={d.title} description={d.summary}>
+  <article class="article">
+    <a class="back" href="/writeups">← writeups</a>
+    <h1>{d.title}</h1>
+    <ul class="facts">
+      <li><span class="k">platform</span><span class="v">{d.platform}</span></li>
+      {d.difficulty && <li><span class="k">difficulty</span><span class="v">{d.difficulty}</span></li>}
+      {d.room_url && <li><span class="k">room</span><span class="v"><a href={d.room_url}>{d.room_url}</a></span></li>}
+      <li><span class="k">date</span><span class="v">{iso(d.date)}</span></li>
+      {d.tools_used.length > 0 && <li><span class="k">tools</span><span class="v">{d.tools_used.join(', ')}</span></li>}
+    </ul>
+    <div class="prose"><Content /></div>
+  </article>
+</Base>

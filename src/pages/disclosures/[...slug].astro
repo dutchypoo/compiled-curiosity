@@ -1,0 +1,31 @@
+---
+import Base from '../../layouts/Base.astro';
+import { getCollection, render } from 'astro:content';
+
+export async function getStaticPaths() {
+  const items = await getCollection('disclosures', ({ data }) => !data.draft);
+  return items.map((entry) => ({ params: { slug: entry.id }, props: { entry } }));
+}
+const { entry } = Astro.props;
+const { Content } = await render(entry);
+const d = entry.data;
+const iso = (x: Date) => x.toISOString().slice(0, 10);
+---
+<Base title={d.title} description={d.summary}>
+  <article class="article">
+    <a class="back" href="/disclosures">← disclosures</a>
+    <h1>{d.title}</h1>
+    <ul class="facts">
+      <li><span class="k">target</span><span class="v"><a href={d.target_url}>{d.target}</a></span></li>
+      <li><span class="k">bug class</span><span class="v">{d.bug_class}</span></li>
+      <li><span class="k">severity</span><span class="v">{d.severity}{d.cvss ? ` (CVSS ${d.cvss})` : ''}</span></li>
+      <li><span class="k">discovery</span><span class="v">{d.discovery_method}</span></li>
+      <li><span class="k">status</span><span class="v">{d.status}</span></li>
+      <li><span class="k">disclosed</span><span class="v">{iso(d.disclosed)}</span></li>
+      {d.cve && <li><span class="k">CVE</span><span class="v">{d.cve}</span></li>}
+      {d.credit && <li><span class="k">credit</span><span class="v">{d.credit}</span></li>}
+      <li><span class="k">advisory</span><span class="v"><a href={d.advisory_url}>{d.advisory_url}</a></span></li>
+    </ul>
+    <div class="prose"><Content /></div>
+  </article>
+</Base>
