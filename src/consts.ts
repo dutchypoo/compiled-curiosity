@@ -7,9 +7,7 @@ export const SITE = {
     'Vulnerability research and responsible disclosure in open source software by dutchypoo.',
   author: 'dutchypoo',
   github: 'https://github.com/dutchypoo',
-  // Set this to the domain address once mail routing is up, then re-add the
-  // contact links on index.astro / about.astro and in security.txt.
-  email: '',
+  email: 'augustwas@compiledcuriosity.net',
   // Update this once you push the site repo (used for the "source" footer link).
   repo: 'https://github.com/dutchypoo/compiled-curiosity',
 };

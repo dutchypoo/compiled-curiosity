@@ -1,13 +1,13 @@
 ---
-title: "Out-of-bounds write in urb_send_current_frame_number_result() (urbdrc client channel)"
+title: "Out-of-bounds write in urb_send_current_frame_number_result"
 target: "FreeRDP/FreeRDP"
 target_url: "https://github.com/FreeRDP/FreeRDP"
-bug_class: "Out-of-bounds write / reachable assertion (CWE-787, CWE-617)"
+bug_class: "Reachable assertion via out-of-bounds write (CWE-617)"
 severity: "High / remote DoS"
 cvss: "7.1"
 cvss_version: "4.0"
 cvss_vector: "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:P/VC:N/VI:N/VA:H/SC:N/SI:N/SA:N"
-cwe: ["CWE-787", "CWE-617"]
+cwe: ["CWE-617"]
 discovery_method: "Custom in-tree libFuzzer harness for the urbdrc channel + ASan"
 disclosed: 2026-08-19
 status: "published"
@@ -20,8 +20,9 @@ cna: "VulnCheck"
 fix_commit: "aa8650b3"
 fix_commit_url: "https://github.com/FreeRDP/FreeRDP/commit/aa8650b300aa4cabd85d9c72b431301509b9043f"
 patched_in: "3.31.0"
+affected: "FreeRDP 3.14.0 through 3.30.0"
 credit: "Credited as reporter on GHSA-h5w2-q35j-443h"
-summary: "A malicious RDP server can send a 28-byte USB redirection message that writes four bytes past a 16-byte buffer in the urbdrc client channel. Found in code Google's OSS-Fuzz fleet never compiles."
+summary: "A malicious RDP server can send a 28-byte USB redirection message that writes four bytes past a 16-byte buffer in the urbdrc client channel, crashing the client when verbose asserts are enabled. Found in code Google's OSS-Fuzz fleet never compiles."
 tags: ["C", "RDP", "fuzzing", "oob-write", "remote"]
 featured: true
 ---

@@ -12,6 +12,7 @@ ghsa: "GHSA-p4fh-487r-9cjc"
 ghsa_url: "https://github.com/kaybi-gh/K7/security/advisories/GHSA-p4fh-487r-9cjc"
 cwe: ["CWE-770", "CWE-209"]
 patched_in: "1.9.1"
+affected: "ghcr.io/kaybi-gh/k7 <= 1.9.0"
 credit: "Credited as reporter on GHSA-p4fh-487r-9cjc"
 summary: "POST /api/federation/peer-request takes no authentication and no valid token. Anyone who can reach the port can write attacker-chosen entries into the admin's pending list, and approval sends three secrets to a URL the attacker picked."
 tags: ["web", "black-box", "credential-disclosure", "ssrf"]

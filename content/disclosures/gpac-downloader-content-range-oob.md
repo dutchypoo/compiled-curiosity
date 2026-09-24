@@ -3,8 +3,8 @@ title: "Out-of-bounds read in wait_for_header_and_parse() via a truncated Conten
 target: "gpac/gpac"
 target_url: "https://github.com/gpac/gpac"
 bug_class: "Out-of-bounds read (CWE-125, CWE-119)"
-severity: "Low / memory-safety defect"
-cvss: "1.9"
+severity: "Medium / memory-safety defect"
+cvss: "5.3"
 cvss_version: "4.0"
 cvss_vector: "CVSS:4.0/AV:L/AC:L/AT:N/PR:L/UI:N/VC:L/VI:L/VA:L/SC:N/SI:N/SA:N"
 cwe: ["CWE-125", "CWE-119"]
@@ -18,6 +18,7 @@ cna: "VulDB"
 fix_commit: "c74a3065"
 fix_commit_url: "https://github.com/gpac/gpac/commit/c74a3065038ede35c1c7b75fa493a69ef6bcdb84"
 patched_in: "abi-16.26"
+affected: "GPAC 26.08-DEV"
 credit: "Fixed upstream using the reported guard"
 summary: "An HTTP server replying with a truncated Content-Range header walks GPAC's header parser one byte past the end of a six-byte allocation. One instance of a whole bug class that runs through the codebase."
 tags: ["C", "HTTP", "source-audit", "oob-read"]

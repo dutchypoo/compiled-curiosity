@@ -18,6 +18,7 @@ cna: "VulDB"
 fix_commit: "6bb0f64b"
 fix_commit_url: "https://github.com/gpac/gpac/commit/6bb0f64b4d1039c0fecd14ee2c1ee861d8661a68"
 patched_in: "abi-16.26"
+affected: "GPAC 26.08-DEV"
 credit: "Credited by name in the upstream fix commit"
 summary: "A 19-byte UDP datagram makes GPAC copy roughly 64KB of adjacent heap memory into its media pipeline. Confirmed, fixed and credited by the maintainer within about eleven hours of a private report."
 tags: ["C", "RTP", "fuzzing", "oob-read", "remote"]

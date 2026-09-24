@@ -27,7 +27,8 @@ const disclosures = defineCollection({
     cna: z.string().optional(),                 // assigning CNA
     fix_commit: z.string().optional(),          // short sha
     fix_commit_url: z.string().url().optional(),
-    patched_in: z.string().optional(),          // release that carries the fix
+    patched_in: z.string().optional(),
+    affected: z.string().optional(),            // affected range, as the CNA states it          // release that carries the fix
     credit: z.string().optional(),
     summary: z.string(),                        // 1-2 sentences, shown on cards
     tags: z.array(z.string()).default([]),

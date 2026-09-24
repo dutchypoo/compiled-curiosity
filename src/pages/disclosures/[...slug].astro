@@ -35,6 +35,7 @@ const sevLabel = sev === 'high' ? 'HIGH' : sev === 'med' ? 'MEDIUM' : 'LOW';
       <li><span class="k">status</span><span class="v">{d.status}</span></li>
       <li><span class="k">reported</span><span class="v">{iso(d.disclosed)}</span></li>
       {d.cna && <li><span class="k">assigning cna</span><span class="v">{d.cna}</span></li>}
+      {d.affected && <li><span class="k">affected</span><span class="v">{d.affected}</span></li>}
       {d.patched_in && <li><span class="k">patched in</span><span class="v">{d.patched_in}</span></li>}
       {d.fix_commit && <li><span class="k">fix commit</span><span class="v">{d.fix_commit_url ? <a href={d.fix_commit_url}>{d.fix_commit}</a> : d.fix_commit}</span></li>}
       {d.credit && <li><span class="k">credit</span><span class="v">{d.credit}</span></li>}

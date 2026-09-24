@@ -1,13 +1,13 @@
 ---
-title: "NULL pointer dereference in gdi_surface_bits() when NSCodec is not negotiated"
+title: "NULL pointer dereference in gdi_surface_bits when the client has not enabled NSCodec"
 target: "FreeRDP/FreeRDP"
 target_url: "https://github.com/FreeRDP/FreeRDP"
-bug_class: "NULL pointer dereference / reachable assertion (CWE-476, CWE-617)"
+bug_class: "NULL pointer dereference (CWE-476)"
 severity: "High / remote DoS"
 cvss: "7.1"
 cvss_version: "4.0"
 cvss_vector: "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:P/VC:N/VI:N/VA:H/SC:N/SI:N/SA:N"
-cwe: ["CWE-476", "CWE-617"]
+cwe: ["CWE-476"]
 discovery_method: "Custom libFuzzer harness (TestFuzzGdiCache) + ASan"
 disclosed: 2026-08-19
 status: "published"
@@ -20,6 +20,7 @@ cna: "VulnCheck"
 fix_commit: "5c12d4ef"
 fix_commit_url: "https://github.com/FreeRDP/FreeRDP/commit/5c12d4eff64f9cba9e7710341b712cf426d399c3"
 patched_in: "3.31.0"
+affected: "FreeRDP before 3.31.0"
 credit: "Credited as reporter on GHSA-ffjr-p229-hpch"
 summary: "A malicious RDP server can crash any FreeRDP client with a 22-byte Surface Bits command that claims NSCodec, even when the client never negotiated that codec. Fix requested and merged by the maintainer the same day it was reported."
 tags: ["C", "RDP", "fuzzing", "null-deref", "remote"]
