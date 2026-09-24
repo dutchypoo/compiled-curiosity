@@ -2,9 +2,9 @@
 export const SITE = {
   name: 'Compiled Curiosity',
   domain: 'https://www.compiledcuriosity.net',
-  tagline: 'Memory-safety and logic bugs in open-source C/C++.',
+  tagline: 'Finding and reporting vulnerabilities in open source software.',
   description:
-    'Vulnerability research and responsible disclosure in open-source C/C++ by dutchypoo.',
+    'Vulnerability research and responsible disclosure in open source software by dutchypoo.',
   author: 'dutchypoo',
   github: 'https://github.com/dutchypoo',
   email: 'wasek.aug@gmail.com',

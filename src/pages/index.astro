@@ -16,12 +16,10 @@ const wr = (await getCollection('writeups', ({ data }) => !data.draft))
 <Base>
   <section class="hero">
     <span class="eyebrow">// vulnerability research &amp; responsible disclosure</span>
-    <h1><span class="hl">{t.cves} CVEs</span> and {t.advisories} GitHub Security Advisories<br />in open-source C and C++.</h1>
-    <p class="lede">I find memory-safety bugs in software people actually run, using
-      coverage-guided fuzzing (<strong>libFuzzer + ASan/UBSan</strong>) and manual source audit,
-      then work with maintainers to get them fixed. Every finding below is public,
-      independently verifiable, and scored at the severity it was actually assigned.
-      Nothing here is inflated.</p>
+    <h1><span class="hl">{t.cves} CVEs</span> and {t.advisories} GitHub Security Advisories<br />in open source software.</h1>
+    <p class="lede">I hunt vulnerabilities in open source projects and report them to the
+      maintainers. Fuzzing, source review, or black box testing, whatever the target
+      needs. Everything below is public and verifiable.</p>
 
     <div class="score">
       <div class="stat p"><span class="n">{t.cves}</span><span class="l">CVEs assigned</span></div>
@@ -62,15 +60,11 @@ const wr = (await getCollection('writeups', ({ data }) => !data.draft))
 
   <section id="about" class="about">
     <div class="shead"><h2><span class="caret">&#9656;</span>about</h2></div>
-    <p>I'm a security researcher focused on <strong>memory-safety bugs in C and C++</strong>.
-      Most of what I find comes from looking for code that ships but never gets fuzzed:
-      channels a project disables in its OSS-Fuzz build, parsers that need a live socket to
-      reach, filters that only load on a file extension the upstream harnesses never set.
-      Then I build a harness that gets there.</p>
-    <p>I report privately where the project has a process for it, I write the patch when I
-      can, and I say plainly what I verified and what I only suspect. Two of the findings
-      below were fixed upstream using my patch verbatim. One of them was confirmed, fixed
-      and credited inside eleven hours.</p>
+    <p>I hunt vulnerabilities in open source software. Most of what I have found so far is
+      memory safety bugs in C, but I am not tied to one language or one bug class. Web
+      application testing is the part I enjoy most.</p>
+    <p>I report to the maintainer, write the patch when I can, and say plainly what I
+      verified and what I did not.</p>
     <div class="contacts">
       <a href={SITE.github}>github.com/dutchypoo &#8599;</a>
       <a href={`mailto:${SITE.email}`}>{SITE.email}</a>

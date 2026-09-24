@@ -6,12 +6,11 @@ import { tally } from '../lib/rank';
 const all = await getCollection('disclosures', ({ data }) => !data.draft);
 const t = tally(all);
 ---
-<Base title="About" description="How dutchypoo finds and reports vulnerabilities in open-source C and C++.">
+<Base title="About" description="How dutchypoo finds and reports vulnerabilities in open source software.">
   <section class="hero">
     <span class="eyebrow">// about</span>
-    <h1>I look for the code nobody is fuzzing.</h1>
-    <p class="lede">Independent security researcher working on <strong>memory-safety
-      vulnerabilities in open-source C and C++</strong>. {t.cves} CVEs, {t.advisories} GitHub
+    <h1>I look for the code nobody is testing.</h1>
+    <p class="lede">Independent security researcher. {t.cves} CVEs, {t.advisories} GitHub
       Security Advisories, {t.total} public disclosures across {t.projects} projects.</p>
   </section>
 
