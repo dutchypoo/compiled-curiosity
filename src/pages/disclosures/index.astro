@@ -2,14 +2,17 @@
 import Base from '../../layouts/Base.astro';
 import DisclosureCard from '../../components/DisclosureCard.astro';
 import { getCollection } from 'astro:content';
-const disc = (await getCollection('disclosures', ({ data }) => !data.draft))
-  .sort((a, b) => (b.data.featured ? 1 : 0) - (a.data.featured ? 1 : 0)
-               || +b.data.disclosed - +a.data.disclosed);
+import { bySeverity, tally } from '../../lib/rank';
+const disc = (await getCollection('disclosures', ({ data }) => !data.draft)).sort(bySeverity);
+const t = tally(disc);
 ---
 <Base title="Disclosures" description="Public vulnerability disclosures by dutchypoo.">
   <section>
-    <div class="shead"><h2><span class="caret">&#9656;</span>disclosures</h2>
-      <span class="more">{disc.length} public</span></div>
+    <div class="shead">
+      <h2><span class="caret">&#9656;</span>disclosures</h2>
+      <span class="more">{t.cves} CVE &middot; {t.advisories} GHSA &middot; {t.total} total</span>
+    </div>
+    <p class="snote">Ranked by assigned severity. Everything here is public and independently verifiable.</p>
     {disc.length > 0
       ? <div class="grid">{disc.map((e) => <DisclosureCard entry={e} />)}</div>
       : <div class="empty">Nothing here yet.</div>}

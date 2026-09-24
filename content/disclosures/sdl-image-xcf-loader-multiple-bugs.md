@@ -4,12 +4,11 @@ target: "libsdl-org/SDL_image"
 target_url: "https://github.com/libsdl-org/SDL_image"
 bug_class: "NULL pointer dereference & unchecked allocation size (DoS)"
 severity: "Low–Medium / DoS"
-cvss: ""
+cwe: ["CWE-476", "CWE-789"]
 discovery_method: "libFuzzer + ASan + UBSan"
 disclosed: 2026-08-11
 status: "open"
 advisory_url: "https://github.com/libsdl-org/SDL_image/issues/757"
-credit: ""
 summary: "Fuzzing IMG_LoadXCF_IO surfaced four issues in the XCF loader — two NULL-pointer dereferences, an unchecked width/height leading to a gigabyte-scale allocation, and a variant-analysis note. All denial of service."
 tags: ["C", "image-parser", "fuzzing", "DoS", "null-deref"]
 featured: false

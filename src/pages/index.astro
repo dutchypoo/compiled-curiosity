@@ -1,38 +1,59 @@
 ---
 import Base from '../layouts/Base.astro';
 import DisclosureCard from '../components/DisclosureCard.astro';
+import CveRow from '../components/CveRow.astro';
 import WriteupCard from '../components/WriteupCard.astro';
 import { getCollection } from 'astro:content';
 import { SITE } from '../consts';
+import { bySeverity, tally, score } from '../lib/rank';
 
-const disc = (await getCollection('disclosures', ({ data }) => !data.draft))
-  .sort((a, b) => (b.data.featured ? 1 : 0) - (a.data.featured ? 1 : 0)
-               || +b.data.disclosed - +a.data.disclosed);
+const all = (await getCollection('disclosures', ({ data }) => !data.draft)).sort(bySeverity);
+const cves = all.filter((e) => e.data.cve).sort((a, b) => score(b.data.cvss) - score(a.data.cvss));
+const t = tally(all);
 const wr = (await getCollection('writeups', ({ data }) => !data.draft))
   .sort((a, b) => +b.data.date - +a.data.date);
 ---
 <Base>
   <section class="hero">
     <span class="eyebrow">// vulnerability research &amp; responsible disclosure</span>
-    <h1>{SITE.tagline}</h1>
-    <p class="lede">I find vulnerabilities in open-source software using coverage-guided
-      fuzzing (<strong>libFuzzer + ASan/UBSan</strong>) and manual source audit, then work with
-      maintainers to get them fixed. Everything here is real and honestly triaged —
-      reported at the severity it earned, nothing inflated.</p>
+    <h1><span class="hl">{t.cves} CVEs</span> and {t.advisories} GitHub Security Advisories<br />in open-source C and C++.</h1>
+    <p class="lede">I find memory-safety bugs in software people actually run, using
+      coverage-guided fuzzing (<strong>libFuzzer + ASan/UBSan</strong>) and manual source audit,
+      then work with maintainers to get them fixed. Every finding below is public,
+      independently verifiable, and scored at the severity it was actually assigned.
+      Nothing here is inflated.</p>
+
+    <div class="score">
+      <div class="stat p"><span class="n">{t.cves}</span><span class="l">CVEs assigned</span></div>
+      <div class="stat"><span class="n">{t.advisories}</span><span class="l">GHSA advisories</span></div>
+      <div class="stat"><span class="n">{t.total}</span><span class="l">public disclosures</span></div>
+      <div class="stat"><span class="n">{t.projects}</span><span class="l">projects reported to</span></div>
+    </div>
   </section>
+
+  {cves.length > 0 && (
+    <section id="cves">
+      <div class="shead">
+        <h2><span class="caret">&#9656;</span>cve registry</h2>
+        <span class="more">ranked by CVSS</span>
+      </div>
+      <p class="snote">Every ID below resolves on cve.org. Click through for the root cause, the proof of concept and the fix commit.</p>
+      <div class="reg">{cves.map((e, i) => <CveRow entry={e} n={i + 1} />)}</div>
+    </section>
+  )}
 
   <section id="disclosures">
     <div class="shead">
-      <h2><span class="caret">&#9656;</span>disclosures</h2>
-      <span class="more"><a href="/disclosures">all →</a></span>
+      <h2><span class="caret">&#9656;</span>all disclosures</h2>
+      <span class="more"><a href="/disclosures">all {t.total} &rarr;</a></span>
     </div>
-    <div class="grid">{disc.slice(0, 4).map((e) => <DisclosureCard entry={e} />)}</div>
+    <div class="grid">{all.slice(0, 6).map((e) => <DisclosureCard entry={e} />)}</div>
   </section>
 
   <section id="writeups">
     <div class="shead">
       <h2><span class="caret">&#9656;</span>writeups</h2>
-      {wr.length > 0 && <span class="more"><a href="/writeups">all →</a></span>}
+      {wr.length > 0 && <span class="more"><a href="/writeups">all &rarr;</a></span>}
     </div>
     {wr.length > 0
       ? <div class="grid">{wr.slice(0, 4).map((e) => <WriteupCard entry={e} />)}</div>
@@ -42,13 +63,19 @@ const wr = (await getCollection('writeups', ({ data }) => !data.draft))
   <section id="about" class="about">
     <div class="shead"><h2><span class="caret">&#9656;</span>about</h2></div>
     <p>I'm a security researcher focused on <strong>memory-safety bugs in C and C++</strong>.
-      What drives me is the work itself — finding real vulnerabilities, disclosing them
-      responsibly, and giving back to the <strong>open-source community</strong>. I report what I
-      find at the severity it actually has, and I work with maintainers, not around them.</p>
+      Most of what I find comes from looking for code that ships but never gets fuzzed:
+      channels a project disables in its OSS-Fuzz build, parsers that need a live socket to
+      reach, filters that only load on a file extension the upstream harnesses never set.
+      Then I build a harness that gets there.</p>
+    <p>I report privately where the project has a process for it, I write the patch when I
+      can, and I say plainly what I verified and what I only suspect. Two of the findings
+      below were fixed upstream using my patch verbatim. One of them was confirmed, fixed
+      and credited inside eleven hours.</p>
     <div class="contacts">
-      <a href={SITE.github}>github.com/dutchypoo ↗</a>
+      <a href={SITE.github}>github.com/dutchypoo &#8599;</a>
       <a href={`mailto:${SITE.email}`}>{SITE.email}</a>
       <a href="/.well-known/security.txt">security.txt</a>
+      <a href="/rss.xml">rss</a>
     </div>
   </section>
 </Base>

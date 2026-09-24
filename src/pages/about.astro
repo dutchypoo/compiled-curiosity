@@ -1,0 +1,64 @@
+---
+import Base from '../layouts/Base.astro';
+import { getCollection } from 'astro:content';
+import { SITE } from '../consts';
+import { tally } from '../lib/rank';
+const all = await getCollection('disclosures', ({ data }) => !data.draft);
+const t = tally(all);
+---
+<Base title="About" description="How dutchypoo finds and reports vulnerabilities in open-source C and C++.">
+  <section class="hero">
+    <span class="eyebrow">// about</span>
+    <h1>I look for the code nobody is fuzzing.</h1>
+    <p class="lede">Independent security researcher working on <strong>memory-safety
+      vulnerabilities in open-source C and C++</strong>. {t.cves} CVEs, {t.advisories} GitHub
+      Security Advisories, {t.total} public disclosures across {t.projects} projects.</p>
+  </section>
+
+  <section class="about">
+    <div class="shead"><h2><span class="caret">&#9656;</span>method</h2></div>
+    <p>Mature projects with existing fuzzing infrastructure are usually described as picked
+      clean. In practice the opposite is true in specific, findable places. A project's
+      OSS-Fuzz build configuration disables channels. Its harnesses write input to a temp
+      file with no extension, so every filter selected by file extension is unreachable.
+      Its parsers are hammered but the consumers downstream of them are never initialised.
+      None of that is hidden. It is written down in the build files.</p>
+    <p>So the first thing I do on a new target is read the fuzzing configuration, not the
+      source. That tells me which code ships to users but has never been executed under a
+      sanitizer. Then I build a harness that reaches it. Two of the findings on this site
+      came directly out of that step, in code that had been in an OSS-Fuzz project for
+      years.</p>
+
+    <div class="shead"><h2><span class="caret">&#9656;</span>how I report</h2></div>
+    <p>Private disclosure first wherever the project has a process for it, public issue
+      where the maintainer's policy says to do that instead. I include a minimised
+      reproducer, the root cause with file and line numbers, and a patch when I can write
+      one. Two of these were merged upstream verbatim, comments included.</p>
+    <p>I also say what I did not verify. Several reports here carry an explicit open
+      question or a limitation I could not resolve. That is deliberate. A report that
+      overstates one thing makes a maintainer re-check everything else in it, and I would
+      rather be trusted than impressive.</p>
+    <p>Where a finding is weaker than it first looks, it is labelled that way here too. One
+      entry on this site is a 1.9 Low. It is on the list because it is real and fixed, not
+      because it is worth bragging about.</p>
+
+    <div class="shead"><h2><span class="caret">&#9656;</span>tooling</h2></div>
+    <p><strong>Fuzzing</strong> libFuzzer, AddressSanitizer, UndefinedBehaviorSanitizer,
+      custom in-tree and standalone harnesses, hand-built corpora and dictionaries derived
+      from the format spec rather than scraped.<br />
+      <strong>Triage</strong> gdb, llvm-symbolizer, delta minimisation, targeted source
+      instrumentation when a backtrace is not enough.<br />
+      <strong>Web</strong> Burp Suite, ffuf, nmap, Wireshark.<br />
+      <strong>Environment</strong> Debian, Kali, Docker, bash, git.</p>
+
+    <div class="shead"><h2><span class="caret">&#9656;</span>contact</h2></div>
+    <p>Open to security research and application security work, remote or Austin, Texas.
+      Reports, questions and corrections all welcome.</p>
+    <div class="contacts">
+      <a href={SITE.github}>github.com/dutchypoo &#8599;</a>
+      <a href={`mailto:${SITE.email}`}>{SITE.email}</a>
+      <a href="/disclosures">disclosures</a>
+      <a href="/.well-known/security.txt">security.txt</a>
+    </div>
+  </section>
+</Base>

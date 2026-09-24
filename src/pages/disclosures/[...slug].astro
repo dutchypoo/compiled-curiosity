@@ -1,6 +1,7 @@
 ---
 import Base from '../../layouts/Base.astro';
 import { getCollection, render } from 'astro:content';
+import { band } from '../../lib/rank';
 
 export async function getStaticPaths() {
   const items = await getCollection('disclosures', ({ data }) => !data.draft);
@@ -10,22 +11,37 @@ const { entry } = Astro.props;
 const { Content } = await render(entry);
 const d = entry.data;
 const iso = (x: Date) => x.toISOString().slice(0, 10);
+const sev = band(d.cvss, d.severity);
+const sevLabel = sev === 'high' ? 'HIGH' : sev === 'med' ? 'MEDIUM' : 'LOW';
 ---
 <Base title={d.title} description={d.summary}>
   <article class="article">
-    <a class="back" href="/disclosures">← disclosures</a>
+    <a class="back" href="/disclosures">&larr; disclosures</a>
     <h1>{d.title}</h1>
+
+    <div class="idrow">
+      {d.cve && <a class="idbadge cveid" href={d.cve_url ?? `https://www.cve.org/CVERecord?id=${d.cve}`}>{d.cve}</a>}
+      {d.ghsa && <a class="idbadge ghsaid" href={d.ghsa_url ?? d.advisory_url}>{d.ghsa}</a>}
+      <span class={`idbadge sev-${sev}`}>{sevLabel}{d.cvss ? ` · CVSS ${d.cvss}` : ''}</span>
+    </div>
+
     <ul class="facts">
       <li><span class="k">target</span><span class="v"><a href={d.target_url}>{d.target}</a></span></li>
       <li><span class="k">bug class</span><span class="v">{d.bug_class}</span></li>
-      <li><span class="k">severity</span><span class="v">{d.severity}{d.cvss ? ` (CVSS ${d.cvss})` : ''}</span></li>
+      {d.cwe.length > 0 && <li><span class="k">cwe</span><span class="v">{d.cwe.join(', ')}</span></li>}
+      <li><span class="k">severity</span><span class="v">{d.severity}{d.cvss ? ` (CVSS ${d.cvss}${d.cvss_version ? ` v${d.cvss_version}` : ''})` : ''}</span></li>
+      {d.cvss_vector && <li><span class="k">vector</span><span class="v">{d.cvss_vector}</span></li>}
       <li><span class="k">discovery</span><span class="v">{d.discovery_method}</span></li>
       <li><span class="k">status</span><span class="v">{d.status}</span></li>
-      <li><span class="k">disclosed</span><span class="v">{iso(d.disclosed)}</span></li>
-      {d.cve && <li><span class="k">CVE</span><span class="v">{d.cve}</span></li>}
+      <li><span class="k">reported</span><span class="v">{iso(d.disclosed)}</span></li>
+      {d.cna && <li><span class="k">assigning cna</span><span class="v">{d.cna}</span></li>}
+      {d.patched_in && <li><span class="k">patched in</span><span class="v">{d.patched_in}</span></li>}
+      {d.fix_commit && <li><span class="k">fix commit</span><span class="v">{d.fix_commit_url ? <a href={d.fix_commit_url}>{d.fix_commit}</a> : d.fix_commit}</span></li>}
       {d.credit && <li><span class="k">credit</span><span class="v">{d.credit}</span></li>}
       <li><span class="k">advisory</span><span class="v"><a href={d.advisory_url}>{d.advisory_url}</a></span></li>
+      {d.cve && <li><span class="k">cve record</span><span class="v"><a href={d.cve_url ?? `https://www.cve.org/CVERecord?id=${d.cve}`}>{d.cve_url ?? `https://www.cve.org/CVERecord?id=${d.cve}`}</a></span></li>}
     </ul>
+
     <div class="prose"><Content /></div>
   </article>
 </Base>

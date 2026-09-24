@@ -4,12 +4,11 @@ target: "bagder/c-comments"
 target_url: "https://github.com/bagder/c-comments"
 bug_class: "NULL pointer dereference (crash)"
 severity: "Low / DoS"
-cvss: ""
+cwe: ["CWE-476"]
 discovery_method: "Manual audit + ASan/UBSan"
 disclosed: 2026-08-10
 status: "open"
 advisory_url: "https://github.com/bagder/c-comments/issues/1"
-credit: ""
 summary: "c-strip crashes with a NULL-pointer write when a processed line produces no output. The output buffer is only allocated on the first addc() call, so a lone \"/\" reaches strip_trailing_space() with a NULL buffer."
 tags: ["C", "parser", "null-deref", "DoS"]
 featured: false

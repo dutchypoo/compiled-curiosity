@@ -5,11 +5,15 @@ target_url: "https://github.com/mattn/http-server"
 bug_class: "Heap-based buffer overflow (CWE-122 / CWE-787)"
 severity: "High / DoS"
 cvss: "7.5"
+cvss_version: "3.1"
+cvss_vector: "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H"
+cwe: ["CWE-122", "CWE-787"]
 discovery_method: "Manual source audit + ASan/UBSan"
 disclosed: 2026-07-29
 status: "published"
 advisory_url: "https://github.com/mattn/http-server/security/advisories/GHSA-6jm3-wmrf-frmh"
-cve: ""
+ghsa: "GHSA-6jm3-wmrf-frmh"
+ghsa_url: "https://github.com/mattn/http-server/security/advisories/GHSA-6jm3-wmrf-frmh"
 credit: "Credited as reporter (accepted) on GHSA-6jm3-wmrf-frmh"
 summary: "An unauthenticated remote client can crash the server with a single over-long request URI: request_complete() copies the raw path into a fixed PATH_MAX heap buffer with no length check."
 tags: ["C", "web-server", "buffer-overflow", "DoS"]

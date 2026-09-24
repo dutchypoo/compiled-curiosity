@@ -4,7 +4,7 @@ target: "dotpeedeeeff/stegtool"
 target_url: "https://github.com/dotpeedeeeff/stegtool"
 bug_class: "Out-of-bounds read (missing bounds validation)"
 severity: "Low / memory-safety"
-cvss: ""
+cwe: ["CWE-125"]
 discovery_method: "Manual review (practice target)"
 disclosed: 2026-08-09
 status: "fixed"
