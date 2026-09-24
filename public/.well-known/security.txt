@@ -1,6 +1,6 @@
 # Report security issues about THIS SITE here.
 # For production you should PGP-sign this file (see RFC 9116).
-Contact: mailto:wasek.aug@gmail.com
+Contact: https://github.com/dutchypoo
 Expires: 2027-08-11T00:00:00.000Z
 Preferred-Languages: en
 Canonical: https://www.compiledcuriosity.net/.well-known/security.txt
