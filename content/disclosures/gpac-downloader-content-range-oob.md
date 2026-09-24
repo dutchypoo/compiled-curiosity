@@ -65,14 +65,6 @@ Upstream commit `c74a3065` adds the guard, plus a NULL check:
 while (val && val[0] && strchr(":= ", val[0]))
 ```
 
-## Honest severity
-
-VulDB scored this 1.9 Low with a local attack vector. I would argue the vector is
-network, since the trigger is a response from an HTTP server GPAC was pointed at, but
-the assigned score is the assigned score and it is not worth disputing over a one-byte
-over-read. It is here because it is a real, fixed, publicly tracked finding, not because
-it is impressive.
-
 ## Timeline
 
 - 2026-08-18 filed as gpac/gpac#3859
