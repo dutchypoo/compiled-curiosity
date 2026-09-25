@@ -22,6 +22,7 @@ const sevLabel = sev === 'high' ? 'HIGH' : sev === 'med' ? 'MEDIUM' : 'LOW';
     <div class="idrow">
       {d.cve && <a class="idbadge cveid" href={d.cve_url ?? `https://www.cve.org/CVERecord?id=${d.cve}`}>{d.cve}</a>}
       {d.ghsa && <a class="idbadge ghsaid" href={d.ghsa_url ?? d.advisory_url}>{d.ghsa}</a>}
+      {!d.cve && d.cve_status && <span class="idbadge pending"><i></i>CVE {d.cve_status}</span>}
       <span class={`idbadge sev-${sev}`}>{sevLabel}{d.cvss ? ` · CVSS ${d.cvss}` : ''}</span>
     </div>
 

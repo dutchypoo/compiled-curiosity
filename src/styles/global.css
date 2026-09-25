@@ -234,3 +234,18 @@ footer.site{border-top:1px solid var(--line);margin-top:20px;padding:24px 0 44px
 @keyframes ccIdleI{0%,86%{transform:rotate(0)}100%{transform:rotate(-360deg)}}
 @keyframes ccSpin{to{transform:rotate(360deg)}}
 @keyframes ccPulse{0%,100%{opacity:.4}50%{opacity:1}}
+
+/* CVE assignment pending: amber, sits between the violet GHSA pill and the pink CVE pill */
+.pill.pending,.idbadge.pending{
+  color:var(--amber);border-color:rgba(255,180,84,.42);
+  background:rgba(255,180,84,.08);display:inline-flex;align-items:center;gap:7px}
+.idbadge.pending{border:1px solid rgba(255,180,84,.42);
+  box-shadow:0 0 0 1px rgba(255,180,84,.14),0 0 22px -7px rgba(255,180,84,.5)}
+.pill.pending i,.idbadge.pending i{
+  width:6px;height:6px;border-radius:50%;background:var(--amber);flex:none;
+  box-shadow:0 0 8px rgba(255,180,84,.85)}
+@media (prefers-reduced-motion: no-preference){
+  .pill.pending i,.idbadge.pending i{animation:ccBlip 2.1s ease-in-out infinite}
+}
+@keyframes ccBlip{0%,100%{opacity:.3;transform:scale(.8)}50%{opacity:1;transform:scale(1)}}
+@media print{.pill.pending,.idbadge.pending{color:#000;box-shadow:none}}

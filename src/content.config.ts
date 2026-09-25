@@ -28,7 +28,8 @@ const disclosures = defineCollection({
     fix_commit: z.string().optional(),          // short sha
     fix_commit_url: z.string().url().optional(),
     patched_in: z.string().optional(),
-    affected: z.string().optional(),            // affected range, as the CNA states it          // release that carries the fix
+    affected: z.string().optional(),            // affected range, as the CNA states it
+    cve_status: z.string().optional(),          // pending-assignment note, e.g. "requested 2026-09-25"
     credit: z.string().optional(),
     summary: z.string(),                        // 1-2 sentences, shown on cards
     tags: z.array(z.string()).default([]),

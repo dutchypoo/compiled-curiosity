@@ -19,6 +19,7 @@ const kicker = d.cve ? `// ${d.cve}`
   <div class="meta">
     {d.cve && <span class="pill cveid">{d.cve}</span>}
     {d.ghsa && !d.cve && <span class="pill ghsaid">{d.ghsa}</span>}
+    {!d.cve && d.cve_status && <span class="pill pending"><i></i>CVE {d.cve_status.split(",")[0]}</span>}
     <span class={`pill ${sev}`}>{d.severity}{d.cvss ? ` · ${d.cvss}` : ''}</span>
     <span class="pill done">{d.status}</span>
     {d.tags.slice(0, 2).map((t: string) => <span class="pill tag">{t}</span>)}
