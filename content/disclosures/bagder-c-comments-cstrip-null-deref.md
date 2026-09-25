@@ -42,7 +42,7 @@ The output buffer `o->p` is only allocated on the first `addc()` call. A lone `/
 `NULL`. `strip_trailing_space()` then dereferences it:
 
 ```c
-buf->p[buf->len] = '\0';   /* c-strip.c:118 — buf->p is NULL, buf->len is 0 */
+buf->p[buf->len] = '\0';   /* c-strip.c:118, buf->p is NULL, buf->len is 0 */
 ```
 
 ## Impact
@@ -57,4 +57,4 @@ or allocate the output buffer up front.
 
 ## Timeline
 
-- **2026-08-10** — reported upstream as issue #1 (open at time of writing).
+- **2026-08-10** reported upstream as issue #1 (open at time of writing).

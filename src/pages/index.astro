@@ -1,15 +1,18 @@
 ---
 import Base from '../layouts/Base.astro';
 import DisclosureCard from '../components/DisclosureCard.astro';
-import CveRow from '../components/CveRow.astro';
+import FindingRow from '../components/FindingRow.astro';
 import WriteupCard from '../components/WriteupCard.astro';
 import { getCollection } from 'astro:content';
 import { SITE } from '../consts';
-import { bySeverity, tally, score } from '../lib/rank';
+import { byScore, tally, isCredited } from '../lib/rank';
 
-const all = (await getCollection('disclosures', ({ data }) => !data.draft)).sort(bySeverity);
-const cves = all.filter((e) => e.data.cve).sort((a, b) => score(b.data.cvss) - score(a.data.cvss));
+const all = await getCollection('disclosures', ({ data }) => !data.draft);
 const t = tally(all);
+// Credited findings carry a CVE or a published advisory; everything else is a
+// public report with no assigned identifier. Split so nothing appears twice.
+const credited = all.filter(isCredited).sort(byScore);
+const other = all.filter((e) => !isCredited(e)).sort(byScore);
 const wr = (await getCollection('writeups', ({ data }) => !data.draft))
   .sort((a, b) => +b.data.date - +a.data.date);
 ---
@@ -29,24 +32,27 @@ const wr = (await getCollection('writeups', ({ data }) => !data.draft))
     </div>
   </section>
 
-  {cves.length > 0 && (
-    <section id="cves">
+  {credited.length > 0 && (
+    <section id="findings">
       <div class="shead">
-        <h2><span class="caret">&#9656;</span>cve registry</h2>
+        <h2><span class="caret">&#9656;</span>credited findings</h2>
         <span class="more">ranked by CVSS</span>
       </div>
-      <p class="snote">Every ID below resolves on cve.org. Click through for the root cause, the proof of concept and the fix commit.</p>
-      <div class="reg">{cves.map((e, i) => <CveRow entry={e} n={i + 1} />)}</div>
+      <p class="snote">Each one carries a CVE, a published GitHub Security Advisory, or both, crediting me by name. Click through for the root cause, the proof of concept and the fix.</p>
+      <div class="reg">{credited.map((e, i) => <FindingRow entry={e} n={i + 1} />)}</div>
     </section>
   )}
 
-  <section id="disclosures">
-    <div class="shead">
-      <h2><span class="caret">&#9656;</span>all disclosures</h2>
-      <span class="more"><a href="/disclosures">all {t.total} &rarr;</a></span>
-    </div>
-    <div class="grid">{all.slice(0, 6).map((e) => <DisclosureCard entry={e} />)}</div>
-  </section>
+  {other.length > 0 && (
+    <section id="disclosures">
+      <div class="shead">
+        <h2><span class="caret">&#9656;</span>other public reports</h2>
+        <span class="more"><a href="/disclosures">all {t.total} &rarr;</a></span>
+      </div>
+      <p class="snote">Reported and public, with no advisory identifier assigned. Some are fixed, some are still open upstream.</p>
+      <div class="grid">{other.map((e) => <DisclosureCard entry={e} />)}</div>
+    </section>
+  )}
 
   <section id="writeups">
     <div class="shead">

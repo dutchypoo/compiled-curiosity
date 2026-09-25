@@ -35,21 +35,21 @@ that buffer, terminating the server.
 ```c
 static void
 request_complete(http_request* request) {
-  memcpy(request->file_path, static_dir, static_dir_len);   /* line 285 — in bounds  */
-  memcpy(request->file_path + static_dir_len,               /* line 286 — OOB write  */
+  memcpy(request->file_path, static_dir, static_dir_len);   /* line 285, in bounds  */
+  memcpy(request->file_path + static_dir_len,               /* line 286, OOB write  */
          request->path, request->path_len);
   if ((request->path + request->path_len - 1) == '/') {
     memcpy(request->file_path + static_dir_len + request->path_len,
-           "index.html", 11);                               /* line 288 — OOB write  */
+           "index.html", 11);                               /* line 288, OOB write  */
   } else
-    request->file_path[static_dir_len + request->path_len] = 0; /* line 290 — OOB    */
+    request->file_path[static_dir_len + request->path_len] = 0; /* line 290, OOB    */
 }
 ```
 
 `static_dir` defaults to `"./public"` (`static_dir_len = 8`, `server.c:71`) and
 `file_path` is `char[PATH_MAX]` (4096 on Linux). Only line 285 is always in bounds.
 
-**Overflow condition:** `static_dir_len + path_len > PATH_MAX` — i.e. `path_len > 4088`
+**Overflow condition:** `static_dir_len + path_len > PATH_MAX`, i.e. `path_len > 4088`
 with the default root. The threshold moves with the `-d` document-root flag. There are
 two out-of-bounds writes per request: the path copy at line 286, and the trailing
 `index.html` / NUL write at 288/290.
@@ -74,7 +74,7 @@ ASAN_OPTIONS=abort_on_error=1 ./http-server-asan -a 127.0.0.1 -p 7000 -d ./publi
 ```
 
 Then send one request whose URI path is ~5000 bytes in a single write
-(`GET /AAAA…AAAA HTTP/1.1`). ASan aborts inside the copy at `server.c:286`:
+(`GET /AAAA...AAAA HTTP/1.1`). ASan aborts inside the copy at `server.c:286`:
 
 ```
 ERROR: AddressSanitizer: heap-buffer-overflow
@@ -90,7 +90,7 @@ The full PoC script is attached to the advisory.
 
 - **Class:** heap-based buffer overflow (CWE-122 / CWE-787)
 - **Impact:** unauthenticated remote denial of service
-- **Severity:** CVSS 3.1 base **7.5 High** — `AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H`
+- **Severity:** CVSS 3.1 base **7.5 High**, vector `AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H`
 - **Auth / interaction:** none / none
 
 Only denial of service is demonstrated. Controlled heap corruption and remote code
@@ -111,7 +111,7 @@ if (static_dir_len + request->path_len + sizeof("index.html") >= sizeof(request-
 
 ## Timeline
 
-- **2026-07-28** — reported privately to the maintainer via GitHub Security Advisories.
-- **2026-07-29** — maintainer accepted the report; advisory **GHSA-6jm3-wmrf-frmh**
+- **2026-07-28** reported privately to the maintainer via GitHub Security Advisories.
+- **2026-07-29** maintainer accepted the report; advisory **GHSA-6jm3-wmrf-frmh**
   published. Credited as reporter.
 - No CVE requested at time of writing (the advisory is CVE-eligible on request).

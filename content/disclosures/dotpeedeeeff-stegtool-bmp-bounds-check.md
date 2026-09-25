@@ -3,7 +3,7 @@ title: "Missing bounds check in BMP parser"
 target: "dotpeedeeeff/stegtool"
 target_url: "https://github.com/dotpeedeeeff/stegtool"
 bug_class: "Out-of-bounds read (missing bounds validation)"
-severity: "Low / memory-safety"
+severity: "Low / memory-safety defect"
 cwe: ["CWE-125"]
 discovery_method: "Manual review (practice target)"
 disclosed: 2026-08-09
@@ -18,7 +18,7 @@ featured: false
 ## Summary
 
 `main` in `steg.c` computes `image = malloc(FileSize)`, then parses the info-header at
-`image + 14` for `DataOffset` — reading `DataOffset - 14` bytes — with no validation that
+`image + 14` for `DataOffset`, reading `DataOffset - 14` bytes, with no validation that
 these offsets lie within the allocation. The parser in `parser.c` bounds-checks against
 the *claimed* length from the BMP header, not the *real* buffer size, so a crafted header
 can drive a read past the end of the allocation.
@@ -37,11 +37,11 @@ header's claimed length.
 ## Resolution
 
 The maintainer added checks to ensure the pointers stay within the allocated memory, and
-additionally stopped trusting the file size taken from the BMP header — both fixed in
+additionally stopped trusting the file size taken from the BMP header. Both fixed in
 response to this report. Issue closed as completed.
 
 ## Timeline
 
-- **2026-08-09** — reported upstream as issue #1.
-- **2026-08-11** — maintainer added bounds checks and header-size validation; issue closed
+- **2026-08-09** reported upstream as issue #1.
+- **2026-08-11** maintainer added bounds checks and header-size validation; issue closed
   as fixed.

@@ -7,7 +7,7 @@ import { SITE } from '../consts';
 interface Props { title?: string; description?: string; }
 const { title, description } = Astro.props;
 const desc = description ?? SITE.description;
-const fullTitle = title ? `${title} — ${SITE.name}` : `${SITE.name} — vulnerability research by ${SITE.author}`;
+const fullTitle = title ? `${title} | ${SITE.name}` : `${SITE.name} | vulnerability research by ${SITE.author}`;
 const canonical = new URL(Astro.url.pathname, Astro.site ?? SITE.domain);
 ---
 <!doctype html>

@@ -1,0 +1,26 @@
+---
+import { band, bandWord, score } from '../lib/rank';
+const { entry, n } = Astro.props;
+const d = entry.data;
+const sev = band(d.cvss, d.severity);
+const hasScore = score(d.cvss) > 0;
+---
+<a class={`cve sev-${sev}`} href={`/disclosures/${entry.id}`}>
+  <span class="rank">{String(n).padStart(2, '0')}</span>
+  <span class="body">
+    <span class={d.cve ? 'id' : 'id ghsa'}>{d.cve ?? d.ghsa}</span><span class="tgt">{d.target}</span>
+    {!d.cve && d.cve_status && <span class="pill pending inline"><i></i>CVE requested</span>}
+    <span class="ttl">{d.title}</span>
+    <span class="refs">
+      {d.cve && d.ghsa && <span><b>advisory</b> {d.ghsa}</span>}
+      {d.cwe?.length > 0 && <span><b>cwe</b> {d.cwe.join(' · ')}</span>}
+      {d.patched_in && <span><b>patched</b> {d.patched_in}</span>}
+      {d.cna && <span><b>cna</b> {d.cna}</span>}
+    </span>
+  </span>
+  <span class="sco">
+    {hasScore
+      ? <><span class="v">{d.cvss}</span><span class="b">{bandWord(d.cvss, d.severity)}{d.cvss_version ? ` · v${d.cvss_version}` : ''}</span></>
+      : <><span class="v word">{bandWord(d.cvss, d.severity)}</span><span class="b">no cvss published</span></>}
+  </span>
+</a>
