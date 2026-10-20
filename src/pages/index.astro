@@ -38,7 +38,7 @@ const wr = (await getCollection('writeups', ({ data }) => !data.draft))
         <h2><span class="caret">&#9656;</span>credited findings</h2>
         <span class="more">ranked by CVSS</span>
       </div>
-      <p class="snote">Each one carries a CVE, a published GitHub Security Advisory, or both, crediting me by name. Click through for the root cause, the proof of concept and the fix.</p>
+      <p class="snote">Each one carries a CVE, a published GitHub Security Advisory, or a public credit by name from the maintainer. Click through for the root cause, the proof of concept and the fix.</p>
       <div class="reg">{credited.map((e, i) => <FindingRow entry={e} n={i + 1} />)}</div>
     </section>
   )}

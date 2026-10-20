@@ -30,7 +30,7 @@ const sevLabel = sev === 'high' ? 'HIGH' : sev === 'med' ? 'MEDIUM' : 'LOW';
       <li><span class="k">target</span><span class="v"><a href={d.target_url}>{d.target}</a></span></li>
       <li><span class="k">bug class</span><span class="v">{d.bug_class}</span></li>
       {d.cwe.length > 0 && <li><span class="k">cwe</span><span class="v">{d.cwe.join(', ')}</span></li>}
-      <li><span class="k">severity</span><span class="v">{d.severity}{d.cvss ? ` (CVSS ${d.cvss}${d.cvss_version ? ` v${d.cvss_version}` : ''})` : ''}</span></li>
+      <li><span class="k">severity</span><span class="v">{d.severity}{d.cvss ? ` (CVSS ${d.cvss}${d.cvss_version ? ` v${d.cvss_version}` : ''}${d.cvss_source ? `, ${d.cvss_source}` : ''})` : ''}</span></li>
       {d.cvss_vector && <li><span class="k">vector</span><span class="v">{d.cvss_vector}</span></li>}
       <li><span class="k">discovery</span><span class="v">{d.discovery_method}</span></li>
       <li><span class="k">status</span><span class="v">{d.status}</span></li>

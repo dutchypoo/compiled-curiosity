@@ -4,6 +4,10 @@ target: "soerennb/extplorer"
 target_url: "https://github.com/soerennb/extplorer"
 bug_class: "OS command execution through an application-controlled executable path (CWE-78, CWE-73)"
 severity: "Critical / authenticated RCE"
+cvss: "9.1"
+cvss_version: "3.1"
+cvss_vector: "CVSS:3.1/AV:N/AC:L/PR:H/UI:N/S:C/C:H/I:H/A:H"
+cvss_source: "my score"
 cwe: ["CWE-78", "CWE-73"]
 discovery_method: "Source review of a local install, then proven live with a shell from the running app"
 disclosed: 2026-10-19
@@ -13,7 +17,8 @@ fix_commit: "731aa2d0"
 fix_commit_url: "https://github.com/soerennb/extplorer/commit/731aa2d066963bf1a3be0f8f675df008c2c63729"
 affected: "3.0.0 to 3.1.1 by source, 3.1.1 tested"
 patched_in: "3.1.2 (3.1.3 recommended)"
-credit: "Credited by name in the 3.1.2 release notes"
+credit: "Credited by name in the 3.1.2 release notes and CHANGELOG"
+credited_in: "3.1.2 release notes"
 summary: "The sendmail path in the email settings is run as a command. Upload a script with no extension, chmod it with the app's own permissions dialog, point the sendmail path at it, click send test email, and the server runs it as www-data. Fixed and released by the maintainer about three hours after the report."
 tags: ["web", "PHP", "rce", "command-execution"]
 featured: true
@@ -120,9 +125,11 @@ not work" from "my setup was broken".
   There is no bash in it, so the script never ran. `#!/bin/sh` with a named pipe and `nc`
   worked.
 - My report cited the executable check at `EmailService.php:313`. It is line 314.
-- I scored it CVSS 3.1 9.0 Critical in the report, with scope changed, because a settings
-  user ends up with the server. The advisory was closed after the fix rather than
-  published, so no score was ever assigned to it. The severity on this page is mine.
+- My report scored it `CVSS:3.1/AV:N/AC:L/PR:H/UI:N/S:C/C:H/I:H/A:H` and called that
+  9.0. That vector works out to 9.1, not 9.0. Scope is changed because a user trusted to
+  configure the app ends up with the server.
+- The advisory was closed after the fix rather than published, so no score was ever
+  assigned by the maintainer. The 9.1 on this page is my own score.
 
 ## What I did not test
 
