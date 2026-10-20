@@ -24,8 +24,8 @@ export const bandWord = (cvss?: string, severity?: string): string => {
   return b === 'high' ? 'high' : b === 'med' ? 'medium' : 'low';
 };
 
-/** A finding is "credited" once it carries a CVE, a published GHSA, or a public credit by name from the maintainer. */
-export const isCredited = (e: any): boolean => Boolean(e.data.cve || e.data.ghsa || e.data.credited_in);
+/** A finding is "credited" once it carries a CVE or a published GHSA. */
+export const isCredited = (e: any): boolean => Boolean(e.data.cve || e.data.ghsa);
 
 /** Ledger order: highest CVSS first, unscored last, newest breaks ties. */
 export const byScore = (a: any, b: any): number =>

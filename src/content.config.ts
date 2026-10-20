@@ -31,7 +31,6 @@ const disclosures = defineCollection({
     affected: z.string().optional(),            // affected range, as the CNA states it
     cve_status: z.string().optional(),          // pending-assignment note, e.g. "requested 2026-09-25"
     credit: z.string().optional(),
-    credited_in: z.string().optional(),         // public credit with no CVE/GHSA, e.g. "eXtplorer 3.1.2 release notes"
     cvss_source: z.string().optional(),         // set when no score was assigned and the score is the reporter's own
     summary: z.string(),                        // 1-2 sentences, shown on cards
     tags: z.array(z.string()).default([]),

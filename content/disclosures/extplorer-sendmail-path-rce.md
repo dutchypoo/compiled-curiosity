@@ -13,12 +13,13 @@ discovery_method: "Source review of a local install, then proven live with a she
 disclosed: 2026-10-19
 status: "fixed"
 advisory_url: "https://github.com/soerennb/extplorer/releases/tag/v3.1.2"
+ghsa: "GHSA-x294-8g9c-m6fc"
+ghsa_url: "https://github.com/soerennb/extplorer/releases/tag/v3.1.2"
 fix_commit: "731aa2d0"
 fix_commit_url: "https://github.com/soerennb/extplorer/commit/731aa2d066963bf1a3be0f8f675df008c2c63729"
 affected: "3.0.0 to 3.1.1 by source, 3.1.1 tested"
 patched_in: "3.1.2 (3.1.3 recommended)"
-credit: "Credited by name in the 3.1.2 release notes and CHANGELOG"
-credited_in: "3.1.2 release notes"
+credit: "Credited by name for GHSA-x294-8g9c-m6fc in the 3.1.2 release notes"
 summary: "The sendmail path in the email settings is run as a command. Upload a script with no extension, chmod it with the app's own permissions dialog, point the sendmail path at it, click send test email, and the server runs it as www-data. Fixed and released by the maintainer about three hours after the report."
 tags: ["web", "PHP", "rce", "command-execution"]
 featured: true

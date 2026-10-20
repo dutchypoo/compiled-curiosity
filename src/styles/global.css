@@ -254,7 +254,6 @@ footer.site{border-top:1px solid var(--line);margin-top:20px;padding:24px 0 44px
 /* ledger row: GHSA-only findings use violet in the ID slot, and rows without a
    published CVSS vector show the severity word where the number would sit */
 .cve .id.ghsa{color:var(--violet);text-shadow:0 0 16px rgba(167,139,250,.3)}
-.cve .id.credit{color:var(--green);text-shadow:0 0 16px rgba(57,245,143,.3)}
 .cve .sco .v.word{font-size:15px;letter-spacing:.06em;text-transform:uppercase}
 .cve.sev-med .sco .v.word{color:var(--amber)}
 .pill.pending.inline{margin-left:10px;padding:1px 7px;font-size:10px;vertical-align:1px}
