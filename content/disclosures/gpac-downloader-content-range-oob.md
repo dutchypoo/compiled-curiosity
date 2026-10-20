@@ -4,9 +4,9 @@ target: "gpac/gpac"
 target_url: "https://github.com/gpac/gpac"
 bug_class: "Out-of-bounds read (CWE-125, CWE-119)"
 severity: "Medium / memory-safety defect"
-cvss: "5.3"
+cvss: "4.8"
 cvss_version: "4.0"
-cvss_vector: "CVSS:4.0/AV:L/AC:L/AT:N/PR:L/UI:N/VC:L/VI:L/VA:L/SC:N/SI:N/SA:N"
+cvss_vector: "CVSS:4.0/AV:L/AC:L/AT:N/PR:L/UI:N/VC:L/VI:L/VA:L/SC:N/SI:N/SA:N/E:P"
 cwe: ["CWE-125", "CWE-119"]
 discovery_method: "Manual source audit of a strchr() misuse pattern"
 disclosed: 2026-08-18
