@@ -1,0 +1,52 @@
+---
+// Unlisted: shared by link only. Not in the nav, the sitemap or the RSS feed,
+// and marked noindex. The videos live in public/backyard-wars/ but are
+// git-ignored (too big for GitHub); they come from the game's repo:
+// backyard-wars/tools/trailer/assemble.py --web [--vertical] (streamed here:
+// CRF 14, at most 60 Mbit/s) and --hq [--vertical] (the full-quality
+// downloads: CRF 12, uncapped).
+import { statSync } from 'node:fs';
+import Base from '../layouts/Base.astro';
+
+const WIDE = '/backyard-wars/backyard-wars-trailer.mp4';
+const TALL = '/backyard-wars/backyard-wars-trailer-vertical.mp4';
+const WIDE_HQ = '/backyard-wars/backyard-wars-trailer-full-quality.mp4';
+const TALL_HQ = '/backyard-wars/backyard-wars-trailer-vertical-full-quality.mp4';
+const mb = (p: string) => {
+  try { return `${Math.round(statSync(`public${p}`).size / 1e6)} MB`; } catch { return ''; }
+};
+---
+<Base title="Backyard Wars" noindex
+  description="Backyard Wars: a 1953 trailer park, a rusty mower, and a can of Pop Powder. The trailer.">
+  <section class="hero">
+    <span class="eyebrow">// side project</span>
+    <h1>Backyard <span class="hl">Wars</span></h1>
+    <p class="lede">A first-person multiplayer game set in a 1953 trailer park, built for
+      two. Every frame and every sound in the trailer is the game itself, running: real
+      footage, its own recorded sounds, nothing mocked up.</p>
+  </section>
+
+  <section class="film" aria-label="Trailer">
+    <video controls preload="metadata" playsinline poster="/backyard-wars/poster.jpg"
+      width="1920" height="1080">
+      <source src={WIDE} type="video/mp4" />
+      Your browser can't play this video here. <a href={WIDE}>Download it</a> instead.
+    </video>
+  </section>
+
+  <p class="film-links">
+    <a href={TALL}>&#9656; the upright cut, for a phone</a>
+    <a href={WIDE_HQ} download>&#9656; download, full quality ({mb(WIDE_HQ)})</a>
+    <a href={TALL_HQ} download>&#9656; download the upright cut, full quality ({mb(TALL_HQ)})</a>
+  </p>
+
+  <section class="film-credits">
+    <p>1920x1080 at 60 fps. The pop, the slam and the whoomp are best with sound on. If it
+      stops to load on a slow connection, the full-quality download plays smoothly from disk.</p>
+    <p>Music: "Rockapalooza!" by Shane Ivers (<a href="https://www.silvermansound.com">silvermansound.com</a>),
+      licensed under <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>.
+      Fonts: Alfa Slab One (SIL Open Font License), Special Elite (Apache 2.0).
+      Sound effects: Freesound.org contributors, the BBC Sound Effects archive,
+      BigSoundBank (Joseph Sardin) and Kenney.</p>
+  </section>
+</Base>

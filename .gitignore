@@ -9,3 +9,6 @@ npm-debug.log*
 .env
 .env.*
 .DS_Store
+# big media served from public/ but kept out of git (GitHub's 100 MB file limit).
+# They must be present locally when deploying, since the rsync uses --delete.
+public/backyard-wars/*.mp4

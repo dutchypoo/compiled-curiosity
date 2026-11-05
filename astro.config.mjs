@@ -6,7 +6,8 @@ import sitemap from '@astrojs/sitemap';
 export default defineConfig({
   site: 'https://www.compiledcuriosity.net',
   trailingSlash: 'ignore',
-  integrations: [sitemap()],
+  // Unlisted pages (shared by link only) stay out of the sitemap; they also carry noindex.
+  integrations: [sitemap({ filter: (page) => !page.includes('/backyard-wars') })],
   image: { service: passthroughImageService() }, // this site processes no images; avoids the sharp dependency path
   markdown: {
     shikiConfig: { theme: 'tokyo-night', wrap: true }, // built-in highlighter; adds no client JS

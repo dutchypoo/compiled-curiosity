@@ -258,3 +258,12 @@ footer.site{border-top:1px solid var(--line);margin-top:20px;padding:24px 0 44px
 .cve.sev-med .sco .v.word{color:var(--amber)}
 .pill.pending.inline{margin-left:10px;padding:1px 7px;font-size:10px;vertical-align:1px}
 .pill.pending.inline i{width:5px;height:5px}
+
+/* film page (unlisted /backyard-wars) */
+.film{margin:6px 0 16px}
+.film video{display:block;width:100%;height:auto;aspect-ratio:16/9;background:#000;
+  border:1px solid var(--line);border-radius:10px;box-shadow:var(--glow-green)}
+.film-links{font-family:var(--mono);font-size:12px;color:var(--faint);display:flex;flex-wrap:wrap;
+  gap:8px 20px;margin:0 0 6px}
+.film-credits{font-size:13px;color:var(--faint);max-width:72ch}
+.film-credits p{margin:0 0 8px}
