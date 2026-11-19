@@ -11,6 +11,7 @@ status: "fixed"
 advisory_url: "https://github.com/libsdl-org/SDL_image/issues/757"
 fix_commit: "48c54f38"
 fix_commit_url: "https://github.com/libsdl-org/SDL_image/commit/48c54f3881fe917c020688ecb60875926fe51527"
+cve_status: "submitted to VulDB, 2026-11-19"
 summary: "Fuzzing IMG_LoadXCF_IO surfaced four issues in the XCF loader: two NULL-pointer dereferences, an unchecked width/height leading to a gigabyte-scale allocation, and a variant-analysis note. All denial of service."
 tags: ["C", "image-parser", "fuzzing", "DoS", "null-deref"]
 featured: false

@@ -8,6 +8,7 @@ discovery_method: "libFuzzer + ASan against ma_decode_memory(), triaged with gdb
 disclosed: 2026-08-22
 status: "fixed"
 advisory_url: "https://github.com/mackron/miniaudio/issues/1151"
+cve_status: "submitted to VulDB, 2026-11-19"
 cwe: ["CWE-835"]
 credit: "Reported publicly at the maintainer's request"
 summary: "A 69-byte WAV file with a forged chunk size locks miniaudio's decoder in a loop forever. Reproduces on a plain non-sanitizer build, so it is not a fuzzing artifact."
