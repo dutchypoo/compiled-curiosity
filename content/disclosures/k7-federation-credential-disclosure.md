@@ -10,6 +10,7 @@ status: "published"
 advisory_url: "https://github.com/kaybi-gh/K7/security/advisories/GHSA-p4fh-487r-9cjc"
 ghsa: "GHSA-p4fh-487r-9cjc"
 ghsa_url: "https://github.com/kaybi-gh/K7/security/advisories/GHSA-p4fh-487r-9cjc"
+cve_status: "submitted to VulDB, 2026-11-19"
 cwe: ["CWE-770", "CWE-209"]
 patched_in: "1.9.1"
 affected: "ghcr.io/kaybi-gh/k7 <= 1.9.0"

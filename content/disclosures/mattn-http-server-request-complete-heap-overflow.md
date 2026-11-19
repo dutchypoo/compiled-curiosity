@@ -14,6 +14,7 @@ status: "published"
 advisory_url: "https://github.com/mattn/http-server/security/advisories/GHSA-6jm3-wmrf-frmh"
 ghsa: "GHSA-6jm3-wmrf-frmh"
 ghsa_url: "https://github.com/mattn/http-server/security/advisories/GHSA-6jm3-wmrf-frmh"
+cve_status: "submitted to VulDB, 2026-11-19"
 credit: "Credited as reporter (accepted) on GHSA-6jm3-wmrf-frmh"
 summary: "An unauthenticated remote client can crash the server with a single over-long request URI: request_complete() copies the raw path into a fixed PATH_MAX heap buffer with no length check."
 tags: ["C", "web-server", "buffer-overflow", "DoS"]

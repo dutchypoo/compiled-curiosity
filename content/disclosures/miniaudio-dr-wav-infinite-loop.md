@@ -6,7 +6,7 @@ bug_class: "Infinite loop / uncontrolled resource consumption (CWE-835)"
 severity: "Medium / DoS"
 discovery_method: "libFuzzer + ASan against ma_decode_memory(), triaged with gdb and instrumentation"
 disclosed: 2026-08-22
-status: "open"
+status: "fixed"
 advisory_url: "https://github.com/mackron/miniaudio/issues/1151"
 cwe: ["CWE-835"]
 credit: "Reported publicly at the maintainer's request"
